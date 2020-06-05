@@ -13,7 +13,7 @@
     
     > If you don't have access to my **artifactory**, update all the **repositories section** in the **build.gradle** file **after cloning**, from:
     >
-    > ```
+    > ```groovy
     > repositories {
     >        maven {
     >            url 'https://repo.ronella.xyz/artifactory/java-central'
@@ -27,9 +27,9 @@
     >    
     >    to
     >    
-    >    ```
+    >    ```groovy
     >    repositories {
-    >  mavenCentral()
+    >  	mavenCentral()
     > }
     >```
 
