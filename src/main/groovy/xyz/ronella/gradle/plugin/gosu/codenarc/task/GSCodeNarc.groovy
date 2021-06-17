@@ -1,14 +1,16 @@
 package xyz.ronella.gradle.plugin.gosu.codenarc.task
 
 import org.gradle.api.DefaultTask
-import org.gradle.api.logging.Logger
-import org.gradle.api.logging.Logging
 import org.gradle.api.tasks.Internal
 import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.TaskAction
 import xyz.ronella.gradle.plugin.gosu.codenarc.GSCodeNarcExtension
 
 class GSCodeNarc extends DefaultTask {
+
+    public GSCodeNarc() {
+        group = 'Gosu CodeNarc'
+    }
 
     @Internal
     SourceSet sourceSet
