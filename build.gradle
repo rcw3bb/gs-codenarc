@@ -21,6 +21,10 @@ plugins {
     id 'maven-publish'
 }
 
+ext {
+    publishingPath = version.toString().contains("SNAPSHOT") ? 'snapshots' : 'internal'
+}
+
 pluginBundle {
     website = 'https://github.com/rcw3bb/gs-codenarc'
     vcsUrl = 'https://github.com/rcw3bb/gs-codenarc'
@@ -58,3 +62,15 @@ dependencies {
 }
 
 compileGroovy.finalizedBy(jar)
+
+publishing {
+    publications {
+        repositories.maven {
+            url "https://repo.ronella.xyz/archiva/repository/${publishingPath}/"
+            credentials {
+                username "${archivaUsername}"
+                password "${archivaPassword}"
+            }
+        }
+    }
+}
