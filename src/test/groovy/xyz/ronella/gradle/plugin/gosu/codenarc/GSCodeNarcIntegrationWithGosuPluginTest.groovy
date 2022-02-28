@@ -49,6 +49,64 @@ class GSCodeNarcIntegrationWithGosuPluginTest extends Specification {
         result.task(":helloWorld").outcome == SUCCESS
     }
 
+    def "defined external gosu file"() {
+        given:
+
+        def mainDir = testProjectDir.newFolder("src", "main", "gosu")
+        def gosuFile = Paths.get(mainDir.absolutePath, "HelloWorld.gs").toFile()
+
+        def mainDirStr =  mainDir.toPath().toFile().absolutePath.replaceAll('\\\\', '\\\\\\\\')
+
+        buildFile << """
+            gscodenarc.maxPriority2Violations=1
+        """
+
+        confFile.write("""
+            <ruleset xmlns="http://codenarc.org/ruleset/1.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://codenarc.org/ruleset/1.0 http://codenarc.org/ruleset-schema.xsd"
+                    xsi:noNamespaceSchemaLocation="http://codenarc.org/ruleset-schema.xsd">
+                <ruleset-ref path="rulesets/gosu.xml">
+                    <rule-config name='GosuFunctionSize'>
+                        <property name='maxLines' value='1'/>
+                    </rule-config>                
+                </ruleset-ref>
+            </ruleset>
+        """.stripIndent())
+
+        gosuFile << """
+        class HelloWorld {
+        
+          public function hello(name : String) {
+            print("Hello " + name)
+            print("Hello " + name)
+          }
+        
+        }      
+        """
+
+        buildFile << """
+            task testGosuFile(type: GSCodeNarcExt) {
+                sourceFiles.from("${mainDirStr}")
+            }
+        """
+
+        when:
+        def result = GradleRunner.create()
+                .withProjectDir(testProjectDir.root)
+                .withArguments('testGosuFile')
+                .build()
+
+        then:
+        println "Result: ${result.output}"
+
+        def report = Paths.get(testProjectDir.getRoot().absolutePath, "build", "reports", "codenarc",
+                "testGosuFile.html").toFile()
+        report.exists()
+
+        result.task(":testGosuFile").outcome == SUCCESS
+    }
+
     def "no gosu main to check"() {
         when:
         def result = GradleRunner.create()
@@ -155,6 +213,8 @@ class GSCodeNarcIntegrationWithGosuPluginTest extends Specification {
 
     private void writeBuildFile() {
         buildFile << """
+            import xyz.ronella.gradle.plugin.gosu.codenarc.task.GSCodeNarcExt 
+
             buildscript {
               dependencies {
                 classpath fileTree(dir: \"${Paths.get("build", "libs").toAbsolutePath().toString()
@@ -175,6 +235,7 @@ class GSCodeNarcIntegrationWithGosuPluginTest extends Specification {
             dependencies {
                 compile group: 'org.gosu-lang.gosu', name: 'gosu-core', version: "1.14.3"
             }
+            
         """.stripIndent()
     }
 
