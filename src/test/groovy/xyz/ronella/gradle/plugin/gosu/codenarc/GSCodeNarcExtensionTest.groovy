@@ -18,17 +18,6 @@ class GSCodeNarcExtensionTest {
     }
 
     @Test
-    public void testDefaultToolVersion() {
-        assertEquals(CodeNarcPlugin.DEFAULT_CODENARC_VERSION, project.extensions.gscodenarc.toolVersion)
-    }
-
-    @Test
-    public void testUpdateToolVersion() {
-        project.extensions.gscodenarc.toolVersion = "1.5"
-        assertEquals("1.5", project.extensions.gscodenarc.toolVersion)
-    }
-
-    @Test
     public void testDefaultExtensionVersion() {
         assertEquals(GSCodeNarcPlugin.DEFAULT_GSCODENARC_VERSION, project.extensions.gscodenarc.extensionVersion)
     }

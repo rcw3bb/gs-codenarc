@@ -47,9 +47,22 @@ class GSCodeNarcPlugin implements Plugin<Project> {
 
         configuration.defaultDependencies(new Action<DependencySet>() {
             public void execute(DependencySet dependencies) {
-                dependencies.add(project.getDependencies().create("xyz.ronella.gosu:gs-codenarc-ext:${project.extensions.gscodenarc.getExtensionVersion()}"))
+                dependencies.add(project.getDependencies().create("xyz.ronella.gosu:gs-codenarc-ext:${getGSCodeNarcExtVersion(project)}"))
             }
         })
+    }
+
+    protected String getGSCodeNarcExtVersion(Project project) {
+        def versionFile = project.rootProject.file("config/codenarc/gs-codenarc-ext.version")
+        def actualVersion = project.extensions.gscodenarc.getExtensionVersion()
+        if (versionFile.exists()) {
+            def extVersion = versionFile.text.trim()
+            if (extVersion!='') {
+                actualVersion=extVersion
+            }
+        }
+
+        return actualVersion
     }
 
     protected def createExtension(Project project) {

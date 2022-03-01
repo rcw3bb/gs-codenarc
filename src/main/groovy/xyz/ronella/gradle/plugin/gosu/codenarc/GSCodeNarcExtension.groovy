@@ -7,7 +7,6 @@ class GSCodeNarcExtension {
     private int maxPriority1Violations
     private int maxPriority2Violations
     private int maxPriority3Violations
-    private String toolVersion
     private String extensionVersion
     private File config
     private String reportFormat
@@ -34,14 +33,6 @@ class GSCodeNarcExtension {
 
     void setMaxPriority3Violations(int maxPriority3Violations) {
         this.maxPriority3Violations = maxPriority3Violations
-    }
-
-    String getToolVersion() {
-        return toolVersion==null ? CodeNarcPlugin.DEFAULT_CODENARC_VERSION : toolVersion
-    }
-
-    void setToolVersion(String toolVersion) {
-        this.toolVersion = toolVersion
     }
 
     String getExtensionVersion() {
