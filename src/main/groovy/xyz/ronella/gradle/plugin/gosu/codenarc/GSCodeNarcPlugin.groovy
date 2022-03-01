@@ -73,9 +73,38 @@ class GSCodeNarcPlugin implements Plugin<Project> {
         }
     }
 
+    private def customRepository(Project project, Properties propRepository) {
+        def propUrl = propRepository.url
+        def propUsername = propRepository.username
+        def propPassword = propRepository.password
+
+        if (propUrl) {
+            println("Using repository ${propUrl}")
+            project.repositories {
+                maven {
+                    url "${propUrl}"
+                    if (propUsername && propPassword) {
+                        credentials {
+                            username "${propUsername}"
+                            password "${propPassword}"
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     protected def initRepositories(Project project) {
-        project.repositories {___repository ->
-            ___repository.mavenCentral()
+        def fileRepository = project.rootProject.file("config/codenarc/repository.properties")
+        if (fileRepository.exists()) {
+            def propRepository = new Properties()
+            propRepository.load(fileRepository.newReader())
+            customRepository(project, propRepository)
+        }
+        else {
+            project.repositories {
+                mavenCentral()
+            }
         }
     }
 
