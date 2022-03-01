@@ -18,9 +18,9 @@ plugins {
 }
 ```
 
-> If you wanted to use **gosu 1.15**, check the https://github.com/rcw3bb/template-gosu-library and select **gosu-15** branch.
+> If you wanted to create a **gosu-library** you can **clone the template** from https://github.com/rcw3bb/template-gosu-library and use this plugin.
 
-This will add the following tasks:
+This will add the **following tasks** within the group **Gosu CodeNarc**:
 
 | Task Name      | Description                              |
 | -------------- | ---------------------------------------- |
@@ -94,6 +94,12 @@ The **gscodenarc.xml** holds the ruleset configuration for codenarc *(i.e. this 
 
 The task that can **target source directories** other that the one provided by the **org.gosu-lang.gosu plugin** *(e.g. <PROJECT_DIR>/src/main/gosu)*.
 
+### Properties
+
+| Property    | Description                                           | Type                       | Default |
+| ----------- | ----------------------------------------------------- | -------------------------- | ------- |
+| sourceFiles | Specifies the directory to scan by gscodenarc plugin. | ConfigurableFileCollection |         |
+
 ### Usage
 
 1. **Import** on your build script the following:
@@ -117,6 +123,10 @@ The task that can **target source directories** other that the one provided by t
    > ```
    > <PROJECT_DIR>/ext/gosu
    > ```
+   
+   > The sample **testGosuFile task** was added to the group **Gosu CodeNarc**.
+
+3. **Run** the **custom task**.
 
 ## The gs-codenarc-ext.version file
 
