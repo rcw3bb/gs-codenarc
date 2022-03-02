@@ -49,7 +49,7 @@ class GSCodeNarcIntegrationWithGosuPluginTest extends Specification {
         result.task(":helloWorld").outcome == SUCCESS
     }
 
-    def "defined external gosu file"() {
+    def "defined external gosu file by extension property"() {
         given:
 
         def mainDir = testProjectDir.newFolder("src", "main", "gosu")
@@ -88,6 +88,64 @@ class GSCodeNarcIntegrationWithGosuPluginTest extends Specification {
         buildFile << """
             task testGosuFile(type: GSCodeNarcExt) {
                 sourceFiles.from("${mainDirStr}")
+            }
+        """
+
+        when:
+        def result = GradleRunner.create()
+                .withProjectDir(testProjectDir.root)
+                .withArguments('testGosuFile')
+                .build()
+
+        then:
+        println "Result: ${result.output}"
+
+        def report = Paths.get(testProjectDir.getRoot().absolutePath, "build", "reports", "codenarc",
+                "testGosuFile.html").toFile()
+        report.exists()
+
+        result.task(":testGosuFile").outcome == SUCCESS
+    }
+
+    def "defined external gosu file by local property"() {
+        given:
+
+        def mainDir = testProjectDir.newFolder("src", "main", "gosu")
+        def gosuFile = Paths.get(mainDir.absolutePath, "HelloWorld.gs").toFile()
+
+        def mainDirStr =  mainDir.toPath().toFile().absolutePath.replaceAll('\\\\', '\\\\\\\\')
+
+        buildFile << """
+        """
+
+        confFile.write("""
+            <ruleset xmlns="http://codenarc.org/ruleset/1.0"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://codenarc.org/ruleset/1.0 http://codenarc.org/ruleset-schema.xsd"
+                    xsi:noNamespaceSchemaLocation="http://codenarc.org/ruleset-schema.xsd">
+                <ruleset-ref path="rulesets/gosu.xml">
+                    <rule-config name='GosuFunctionSize'>
+                        <property name='maxLines' value='1'/>
+                    </rule-config>                
+                </ruleset-ref>
+            </ruleset>
+        """.stripIndent())
+
+        gosuFile << """
+        class HelloWorld {
+        
+          public function hello(name : String) {
+            print("Hello " + name)
+            print("Hello " + name)
+          }
+        
+        }      
+        """
+
+        buildFile << """
+            task testGosuFile(type: GSCodeNarcExt) {
+                sourceFiles.from("${mainDirStr}")
+                maxPriority2Violations=1
             }
         """
 

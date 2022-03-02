@@ -1,7 +1,5 @@
 package xyz.ronella.gradle.plugin.gosu.codenarc
 
-import org.gradle.api.plugins.quality.CodeNarcPlugin
-
 class GSCodeNarcExtension {
 
     private int maxPriority1Violations
