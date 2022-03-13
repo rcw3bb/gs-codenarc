@@ -40,13 +40,19 @@ class GSCodeNarcPlugin implements Plugin<Project> {
         return this.getToolName().toLowerCase();
     }
 
-    protected def initDepedencies(Project project) {
+    protected def initDependencies(Project project) {
         final def configuration = project.configurations.create(getConfigurationName())
         configuration.setVisible(false)
         configuration.setTransitive(true)
 
         configuration.defaultDependencies(new Action<DependencySet>() {
             public void execute(DependencySet dependencies) {
+                def libs = project.rootProject.file("config/codenarc/libs")
+
+                if (libs.exists()) {
+                    dependencies.add(project.getDependencies().create(project.rootProject.fileTree(dir: libs.toPath())))
+                }
+
                 dependencies.add(project.getDependencies().create("xyz.ronella.gosu:gs-codenarc-ext:${getGSCodeNarcExtVersion(project)}"))
             }
         })
@@ -140,7 +146,7 @@ class GSCodeNarcPlugin implements Plugin<Project> {
     void apply(Project project) {
         createExtension(project)
         initRepositories(project)
-        initDepedencies(project)
+        initDependencies(project)
         createAntTask(project)
         createTasks(project)
     }
