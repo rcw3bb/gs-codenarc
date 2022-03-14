@@ -48,12 +48,11 @@ class GSCodeNarcPlugin implements Plugin<Project> {
         configuration.defaultDependencies(new Action<DependencySet>() {
             public void execute(DependencySet dependencies) {
                 def libs = project.rootProject.file("config/codenarc/libs")
+                dependencies.add(project.getDependencies().create("xyz.ronella.gosu:gs-codenarc-ext:${getGSCodeNarcExtVersion(project)}"))
 
                 if (libs.exists()) {
                     dependencies.add(project.getDependencies().create(project.rootProject.fileTree(dir: libs.toPath())))
                 }
-
-                dependencies.add(project.getDependencies().create("xyz.ronella.gosu:gs-codenarc-ext:${getGSCodeNarcExtVersion(project)}"))
             }
         })
     }

@@ -49,7 +49,7 @@ abstract class GSCodeNarcExt extends DefaultTask {
             project.ant.codenarcGosu(ruleSetFiles: config.isPresent() ? config.get().asFile.toURI().toString() : extension.config.toURI().toString(),
                     maxPriority1Violations: maxPriority1Violations.getOrElse(extension.maxPriority1Violations),
                     maxPriority2Violations: maxPriority2Violations.getOrElse(extension.maxPriority2Violations),
-                    maxPriority3Violations: maxPriority2Violations.getOrElse(extension.maxPriority3Violations)) {
+                    maxPriority3Violations: maxPriority3Violations.getOrElse(extension.maxPriority3Violations)) {
                 report(type: extension.reportFormat) {
                     option(name: "outputFile", value: "${project.rootProject.buildDir}/reports/codenarc/${name}.html")
                     option(name: "title", value: "Gosu Library Report for ${name}")
