@@ -138,7 +138,7 @@ The task that can **target source directories** other that the one provided by t
 The file that can **override the default gs-codenarc-ext version** to use. Create the file **gs-codenarc-ext.version** in the **configuration directory** with the target gs-codenarc-ext version as follows:
 
 ```
-1.1.1
+1.1.2
 ```
 
 ## The repository.properties file

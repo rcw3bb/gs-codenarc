@@ -1,5 +1,12 @@
 # Changelog
 
+## 2.0.0 : TBC
+
+### New
+
+* Refactored codes to become more consistent.
+* Defaulted to use **gs-codenarc-ext v1.1.2**.
+
 ## 1.2.0 : 2022-03-14
 
 ### New
