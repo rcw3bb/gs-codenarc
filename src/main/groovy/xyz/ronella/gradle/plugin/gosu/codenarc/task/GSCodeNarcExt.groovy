@@ -1,6 +1,5 @@
 package xyz.ronella.gradle.plugin.gosu.codenarc.task
 
-import org.gradle.api.DefaultTask
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.provider.Property
@@ -18,7 +17,7 @@ import xyz.ronella.gradle.plugin.gosu.codenarc.impl.GSCodeNarcExtensionWrapper
  * @author Ronaldo Webb
  * @since 1.1.0
  */
-abstract class GSCodeNarcExt extends DefaultTask {
+abstract class GSCodeNarcExt extends AbstractGSCodeNarc {
 
     GSCodeNarcExt() {
         group = 'Gosu CodeNarc'
@@ -46,25 +45,8 @@ abstract class GSCodeNarcExt extends DefaultTask {
     @TaskAction
     def executeCommand() {
         GSCodeNarcExtension extension = new GSCodeNarcExtensionWrapper(project.extensions.gscodenarc)
+        runGSCodenarc(sourceFiles, extension, config, maxPriority1Violations, maxPriority2Violations,
+                maxPriority3Violations, name)
 
-        if (sourceFiles!=null && sourceFiles.size()>0) {
-            project.ant.codenarcGosu(ruleSetFiles: config.orElse(extension.config.get()).get().asFile.toURI().toString(),
-                    maxPriority1Violations: maxPriority1Violations.orElse(extension.maxPriority1Violations.getOrElse(0)).get(),
-                    maxPriority2Violations: maxPriority2Violations.orElse(extension.maxPriority2Violations.getOrElse(0)).get(),
-                    maxPriority3Violations: maxPriority3Violations.orElse(extension.maxPriority3Violations.getOrElse(0)).get()) {
-                report(type: extension.reportFormat.get()) {
-                    option(name: "outputFile", value: "${project.rootProject.buildDir}/reports/codenarc/${name}.html")
-                    option(name: "title", value: "Gosu Library Report for ${name}")
-                }
-                sourceFiles.each { ___file ->
-                    if (___file.exists()) {
-                        fileset(dir: ___file)
-                    }
-                }
-            }
-        }
-        else {
-            print "Nothing to check."
-        }
     }
 }

@@ -341,7 +341,7 @@ class GSCodeNarcIntegrationWithGosuPluginTest extends Specification {
             }
             
             plugins {
-              id "org.gosu-lang.gosu" version "0.3.10"
+              id "org.gosu-lang.gosu" version "6.1.0"
             }            
             
             apply plugin: "xyz.ronella.gs-codenarc"
