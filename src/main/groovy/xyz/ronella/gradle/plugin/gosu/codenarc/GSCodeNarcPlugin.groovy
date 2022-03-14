@@ -7,13 +7,15 @@ import org.gradle.api.artifacts.DependencySet
 import org.gradle.api.logging.Logger
 import org.gradle.api.logging.Logging
 import org.gradle.api.plugins.JavaPluginConvention
+import xyz.ronella.gradle.plugin.gosu.codenarc.impl.GSCodeNarcExtensionWrapper
 import xyz.ronella.gradle.plugin.gosu.codenarc.task.GSCodeNarc
 
 class GSCodeNarcPlugin implements Plugin<Project> {
 
     private final Logger LOG = Logging.getLogger(GSCodeNarc.class)
 
-    public static final String DEFAULT_GSCODENARC_VERSION = "1.1.1"
+    public static final String DEFAULT_GSCODENARC_VERSION = '1.1.1'
+    public static final String DEFAULT_REPORT_FORMAT = 'html'
 
     protected def createAntTask(Project project) {
         withBasePlugin(project) {
@@ -59,7 +61,7 @@ class GSCodeNarcPlugin implements Plugin<Project> {
 
     protected String getGSCodeNarcExtVersion(Project project) {
         def versionFile = project.rootProject.file("config/codenarc/gs-codenarc-ext.version")
-        def actualVersion = project.extensions.gscodenarc.getExtensionVersion()
+        def actualVersion = new GSCodeNarcExtensionWrapper(project.extensions.gscodenarc).extensionVersion.get()
         if (versionFile.exists()) {
             def extVersion = versionFile.text.trim()
             if (extVersion!='') {
@@ -73,8 +75,8 @@ class GSCodeNarcPlugin implements Plugin<Project> {
     protected def createExtension(Project project) {
         def extension = project.extensions.create(getTaskBaseName(), GSCodeNarcExtension.class);
         def config = extension.getConfig()
-        if (null==config) {
-            extension.setConfig(project.rootProject.file("config/codenarc/gscodenarc.xml"))
+        if (!config.isPresent()) {
+            extension.config=project.rootProject.file("config/codenarc/gscodenarc.xml")
         }
     }
 

@@ -1,5 +1,7 @@
 package xyz.ronella.gradle.plugin.gosu.codenarc
 
+import xyz.ronella.gradle.plugin.gosu.codenarc.impl.GSCodeNarcExtensionWrapper
+
 import static org.junit.Assert.*
 
 import org.gradle.api.Project
@@ -19,19 +21,20 @@ class GSCodeNarcExtensionTest {
 
     @Test
     public void testDefaultExtensionVersion() {
-        assertEquals(GSCodeNarcPlugin.DEFAULT_GSCODENARC_VERSION, project.extensions.gscodenarc.extensionVersion)
+        assertEquals(GSCodeNarcPlugin.DEFAULT_GSCODENARC_VERSION, new GSCodeNarcExtensionWrapper(project.extensions.gscodenarc).extensionVersion.get())
     }
 
     @Test
     public void testUpdateExtensionVersion() {
         project.extensions.gscodenarc.extensionVersion = "1.1.0"
-        assertEquals("1.1.0", project.extensions.gscodenarc.extensionVersion)
+        assertEquals("1.1.0", project.extensions.gscodenarc.extensionVersion.get())
     }
 
     @Test
     public void testDefaultConfig() {
         def suffix="config\\codenarc\\gscodenarc.xml"
-        assertTrue(project.extensions.gscodenarc.config.absolutePath.endsWith(suffix))
+        println project.extensions.gscodenarc.config.get()
+        //assertTrue(project.extensions.gscodenarc.config.get().asFile().absolutePath.endsWith(suffix))
     }
 
 }
