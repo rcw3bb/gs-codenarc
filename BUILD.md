@@ -7,31 +7,46 @@
 * Create or update **<USER_HOME>\\.gradle\\gradle.properties** to have the following properties:
 
     ```properties
-    artifactoryUsername=<VALID_USERNAME>
-    artifactoryPassword=<VALID_PASSWORD>
+    artifactoryUsername=<VALID_ARTIFACTORY_USERNAME>
+    artifactoryPassword=<VALID_ARTIFACTORY_PASSWORD>
+    archivaUsername=<VALID_ARCHIVA_USERNAME>
+    archivaPassword=<VALID_ARCHIVA_USERNAME>
     ```
     
-    > If you don't have access to my **artifactory**, update all the **repositories section** in the **build.gradle** file **after cloning**, from:
+    > If you don't have access to my **artifactory** and **archiva** repositories, update all the **repositories section** in the **build.gradle** file **after cloning**, from:
     >
     > ```groovy
     > repositories {
-    >        maven {
-    >            url 'https://repo.ronella.xyz/artifactory/java-central'
-    >            credentials {
-    >                username "${artifactoryUsername}"
-    >                password "${artifactoryPassword}"
-    >            }
-    >        }
-    >    }
-    >    ```
-    >    
-    >    to
-    >    
-    >    ```groovy
-    >    repositories {
-    >  	mavenCentral()
+    >     maven {
+    >         url 'https://repo.ronella.xyz/artifactory/java-central'
+    >         credentials {
+    >             username "${artifactoryUsername}"
+    >             password "${artifactoryPassword}"
+    >         }
+    >         mavenContent {
+    >             releasesOnly()
+    >         }
+    >     }
+    >     maven {
+    >         url 'https://repo.ronella.xyz/archiva/repository/snapshots/'
+    >         credentials {
+    >             username "${archivaUsername}"
+    >             password "${archivaPassword}"
+    >         }
+    >         mavenContent {
+    >             snapshotsOnly()
+    >         }
+    >     }
     > }
-    >```
+    > ```
+    >
+    > to
+    >
+    > ```groovy
+    > repositories {
+    > 	mavenCentral()
+    > }
+    > ```
 
 ## Running Unit Test
 

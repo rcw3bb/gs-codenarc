@@ -14,7 +14,7 @@ In your **build.gradle** file add the following plugins:
 ```groovy
 plugins {
   id "org.gosu-lang.gosu" version "0.3.10"
-  id "xyz.ronella.gs-codenarc" version "1.1.0"
+  id "xyz.ronella.gs-codenarc" version "1.2.0"
 }
 ```
 
@@ -98,7 +98,11 @@ The task that can **target source directories** other that the one provided by t
 
 | Property    | Description                                           | Type                       | Default |
 | ----------- | ----------------------------------------------------- | -------------------------- | ------- |
-| sourceFiles | Specifies the directory to scan by gscodenarc plugin. | ConfigurableFileCollection |         |
+| config                 | The configuration to use.                           | File   | ${gscodenarc.config}                 |
+| maxPriority1Violations | The maximum P1 rule failures before the build fail.          | int    | ${gscodenarc.maxPriority1Violations}  |
+| maxPriority2Violations | The maximum P2 rule failures before the build fail.          | int    | ${gscodenarc.maxPriority2Violations}  |
+| maxPriority3Violations | The maximum P3 rule failures before the build fail.          | int    | ${gscodenarc.maxPriority3Violations}  |
+| sourceFiles | Specifies the directory to scan by gscodenarc plugin. | FileCollection |         |
 
 ### Usage
 
@@ -115,6 +119,7 @@ The task that can **target source directories** other that the one provided by t
    ```groovy
    task testGosuFile(type: GSCodeNarcExt) {
        sourceFiles.from(file("ext/gosu"))
+       maxPriority2Violations=1
    }
    ```
 
@@ -123,7 +128,7 @@ The task that can **target source directories** other that the one provided by t
    > ```
    > <PROJECT_DIR>/ext/gosu
    > ```
-   
+
    > The sample **testGosuFile task** was added to the group **Gosu CodeNarc**.
 
 3. **Run** the **custom task**.
@@ -152,12 +157,22 @@ The properties file that can **override the default repository *(i.e. maven cent
 
   The password associated to the username.
 
+## Custom Libraries for GSCodeNarc plugin
+
+Create a **libs directory** under the **configuration directory** like the following:
+
+```
+<PROJECT_DIR>/config/codenarc/libs
+```
+
+The files inside the libs directory will be considered when running the tasks for the GSCodeNarc plugin. However, to use the custom library you need to add or update the configuration file *(e.g. gscodenarc.xml)* to use a new ruleset configuration.
+
 ## Sample build.gradle File
 
 ```groovy
 plugins {
   id "org.gosu-lang.gosu" version "0.3.10"
-  id "xyz.ronella.gs-codenarc" version "1.1.0"
+  id "xyz.ronella.gs-codenarc" version "1.2.0"
 }
 
 repositories {

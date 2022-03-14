@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.2.0 : 2022-03-14
+
+### New
+
+* Add the following properties for **GSCodeNarcExt properties**:
+  * config
+  * maxPriority1Violations
+  * maxPriority2Violations
+  * maxPriority3Violations
+* **Ability to add custom libraries** that can be used as additional rulesets.
+
 ## 1.1.0 : 2022-03-01
 
 ### New
