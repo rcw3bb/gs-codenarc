@@ -14,7 +14,7 @@ class GSCodeNarcPlugin implements Plugin<Project> {
 
     private final Logger LOG = Logging.getLogger(GSCodeNarc.class)
 
-    public static final String DEFAULT_GSCODENARC_VERSION = '1.1.1'
+    public static final String DEFAULT_GSCODENARC_VERSION = '1.1.2'
     public static final String DEFAULT_REPORT_FORMAT = 'html'
 
     protected def createAntTask(Project project) {
