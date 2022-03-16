@@ -5,7 +5,6 @@ import xyz.ronella.gradle.plugin.gosu.codenarc.impl.GSCodeNarcExtensionWrapper
 import static org.junit.Assert.*
 
 import org.gradle.api.Project
-import org.gradle.api.plugins.quality.CodeNarcPlugin
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Before
 import org.junit.Test
