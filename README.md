@@ -4,7 +4,7 @@ The plugin that runs [GS CodeNarc Extension](https://github.com/rcw3bb/gs-codena
 
 ## Pre-requisites
 
-* Java 8 (Minimum)
+* Java 11
 * Gosu plugin
 
 ## Plugging in the gs-codenarc
@@ -13,8 +13,8 @@ In your **build.gradle** file add the following plugins:
 
 ```groovy
 plugins {
-  id "org.gosu-lang.gosu" version "0.3.10"
-  id "xyz.ronella.gs-codenarc" version "1.2.0"
+  id "org.gosu-lang.gosu" version "6.1.0"
+  id "xyz.ronella.gs-codenarc" version "2.0.0"
 }
 ```
 
@@ -171,8 +171,8 @@ The files inside the libs directory will be considered when running the tasks fo
 
 ```groovy
 plugins {
-  id "org.gosu-lang.gosu" version "0.3.10"
-  id "xyz.ronella.gs-codenarc" version "1.2.0"
+  id "org.gosu-lang.gosu" version "6.1.0"
+  id "xyz.ronella.gs-codenarc" version "2.0.0"
 }
 
 repositories {
