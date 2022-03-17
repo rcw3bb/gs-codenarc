@@ -2,7 +2,7 @@
 
 ## Pre-requisite
 
-* Java 8
+* Java 11
 
 * Create or update **<USER_HOME>\\.gradle\\gradle.properties** to have the following properties:
 
@@ -10,7 +10,7 @@
     artifactoryUsername=<VALID_ARTIFACTORY_USERNAME>
     artifactoryPassword=<VALID_ARTIFACTORY_PASSWORD>
     archivaUsername=<VALID_ARCHIVA_USERNAME>
-    archivaPassword=<VALID_ARCHIVA_USERNAME>
+    archivaPassword=<VALID_ARCHIVA_PASSWORD>
     ```
     
     > If you don't have access to my **artifactory** and **archiva** repositories, update all the **repositories section** in the **build.gradle** file **after cloning**, from:

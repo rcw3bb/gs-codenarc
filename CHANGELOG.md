@@ -1,9 +1,10 @@
 # Changelog
 
-## 2.0.0 : TBC
+## 2.0.0 : 2022-03-18
 
 ### New
 
+* **Java 11** is now required.
 * Refactored codes to become more consistent.
 * Defaulted to use **gs-codenarc-ext v1.1.2**.
 
